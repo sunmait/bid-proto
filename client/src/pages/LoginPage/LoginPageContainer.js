@@ -4,7 +4,7 @@ import { login } from '../../redux/auth/authActions';
 
 const LoginPageContainer = reduxForm({
   form: 'login',
-  onSubmit: (payload, dispatch) => { dispatch(login(payload)) }
+  onSubmit: (payload, dispatch) => dispatch(login(payload))
 })(LoginPageComponent);
 
 export default LoginPageContainer;

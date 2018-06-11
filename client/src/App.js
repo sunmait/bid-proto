@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, withRouter, Link } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage/LoginPageContainer';
-import MainPage from './pages/MainPageComponent';
+import MainPage from './pages/MainPage/MainPageContainer';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';

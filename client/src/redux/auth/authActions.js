@@ -7,7 +7,7 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const login = creds => async dispatch => {
   // TODO: login
 
-  dispatch(loginSuccess({ userName: creds.userName }))
+  dispatch(loginSuccess({ userName: creds.userName }));
 }
 
 export const logout = () => async dispatch => {
