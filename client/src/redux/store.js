@@ -1,5 +1,7 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form';
+
 import authReducer from './auth/authReducer';
 import loanReducer from './loan/loanReducer';
 
@@ -12,7 +14,8 @@ const composeEnhancers =
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  loan: loanReducer
+  loan: loanReducer,
+  form: formReducer
 });
 
 const store = createStore(

@@ -1,4 +1,5 @@
 import React from 'react';
+import withAuthentication from '../hocs/withAuthentication';
 
 const HomePage = props => {
   return (
@@ -6,4 +7,4 @@ const HomePage = props => {
   );
 };
 
-export default HomePage;
+export default withAuthentication(HomePage);
