@@ -14,6 +14,10 @@ namespace BidsPrototype.Domain.Specifications.Impl
 
         public bool HasIncludes => Includes.Any() || IncludeStrings.Any();
 
+        public Specification()
+        {
+        }
+
         public Specification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
