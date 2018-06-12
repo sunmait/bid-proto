@@ -1,13 +1,13 @@
 import { SubmissionError } from 'redux-form';
-
+import { addSeconds, subHours } from 'date-fns';
 export const REQUEST_LOANS = 'REQUEST_LOANS';
 export const RECEIVE_LOANS = 'RECEIVE_LOANS';
 
 
 const loans = [
-  { name: 'loan 1', bidStartTime: new Date(2018, 6, 5), },
-  { name: 'loan 2', bidStartTime: new Date(2018, 6, 4), },
-  { name: 'loan 3', bidStartTime: new Date(2018, 6, 3), }
+  { name: 'loan 1', bidStartTime: subHours(new Date(), 2), },
+  { name: 'loan 2', bidStartTime: addSeconds(new Date(), 10), },
+  { name: 'loan 3', bidStartTime: addSeconds(new Date(), 2), }
 ]
 
 export const fetchLoans = () => async dispatch => {
