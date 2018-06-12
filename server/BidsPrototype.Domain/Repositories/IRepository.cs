@@ -11,5 +11,7 @@ namespace BidsPrototype.Domain.Repositories
         Task<IEnumerable<T>> FindAllAsync(ISpecification<T> spec);
 
         Task<T> FindFirstAsync(ISpecification<T> spec);
+
+        Task UpdateAsync(T entity);
     }
 }

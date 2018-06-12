@@ -35,6 +35,12 @@ namespace BidsPrototype.Infrastructure.Data.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task UpdateAsync(T entity)
+        {
+            DataContext.Entry(entity).State = EntityState.Modified;
+            await DataContext.SaveChangesAsync();
+        }
+
         protected IQueryable<T> BuildQueryBySpec(ISpecification<T> spec)
         {
             IQueryable<T> query = spec

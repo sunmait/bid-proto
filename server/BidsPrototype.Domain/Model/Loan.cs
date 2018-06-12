@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BidsPrototype.Domain.Model
 {
@@ -22,5 +23,13 @@ namespace BidsPrototype.Domain.Model
         public ICollection<Bid> Bids { get; private set; } = new List<Bid>();
 
         public ICollection<LoanUser> LoanUsers { get; private set; } = new List<LoanUser>();
+
+        public void MakeBid(int userId, double amount)
+        {
+            User user = LoanUsers.First(x => x.UserId == userId).User;
+            Bid bid = new Bid(amount, user);
+
+            Bids.Add(bid);
+        }
     }
 }

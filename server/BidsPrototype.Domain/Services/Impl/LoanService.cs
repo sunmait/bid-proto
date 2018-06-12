@@ -24,5 +24,17 @@ namespace BidsPrototype.Domain.Services.Impl
             IEnumerable<Loan> loans = await _loanRepo.FindAllAsync(spec);
             return loans;
         }
+
+        public async Task MakeBid(int userId, int loanId, double amount)
+        {
+            // TODO: add validation
+            var spec = new Specification<Loan>(x => x.Id == loanId);
+            spec.IncludeStrings.Add("LoanUsers.User");
+
+            Loan loan = await _loanRepo.FindFirstAsync(spec);
+            loan.MakeBid(userId, amount);
+
+            await _loanRepo.UpdateAsync(loan);
+        }
     }
 }
