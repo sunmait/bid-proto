@@ -1,0 +1,36 @@
+version: '3'
+services:
+  db:
+     image: postgres
+     restart: always
+     ports:
+       - 5432:5432
+     environment:
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: password
+         POSTGRES_DB: bidproto
+     volumes:
+       - pgdata:/var/lib/postgresql/data
+     networks:
+       - mynetwork
+ 
+  webapi:
+     image: webapi
+     ports:
+       - 5000:80
+     build:
+       context: .
+       dockerfile: Dockerfile
+     links:
+       - db
+     depends_on:
+       - "db"
+     networks:
+       - mynetwork
+ 
+volumes:
+  pgdata:
+ 
+networks:
+  mynetwork:
+     driver: bridge
