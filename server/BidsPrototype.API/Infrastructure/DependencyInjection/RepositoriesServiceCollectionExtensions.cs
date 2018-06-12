@@ -10,7 +10,7 @@ namespace BidsPrototype.API.Infrastructure.DependencyInjection
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString))
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString))
                 .AddTransient<ILoanRepository, LoanRepository>();
 
             return services;

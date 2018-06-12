@@ -11,6 +11,7 @@ namespace BidsPrototype.Infrastructure.Data
         {
             // TODO: Replace this to migrations
             // DataContextSeed.Seed(this);
+            Database.EnsureCreated();
         }
 
         public DbSet<Account> Accounts { get; set; }
