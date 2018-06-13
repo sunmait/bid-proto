@@ -66,27 +66,32 @@ namespace BidsPrototype.Domain.Model
 
         private void ValidateNewBid(Bid bid)
         {
-            string errorMessage = null;
+            string errorMessage = "";
 
             DateTime biddingStartTime = GetNearestBidStatTime(bid.CreatedDate);
             DateTime biddingEndTime = biddingStartTime.AddSeconds(BidTimeDurationSeconds);
 
             if (bid.CreatedDate < biddingStartTime || bid.CreatedDate > biddingEndTime)
             {
-                errorMessage = "Invalid time for bidding.";
+                errorMessage += "Invalid time for bidding.";
             }
 
             if (bid.Amount < 1 || bid.Amount > MaxBidAmount)
             {
-                errorMessage = "Invalid bid amount.";
+                errorMessage += "\nInvalid bid amount.";
             }
 
             if (bid.User == null)
             {
-                errorMessage = "Current user doesn't participate in specified loan.";
+                errorMessage += "\nCurrent user doesn't participate in specified loan.";
             }
 
-            if (errorMessage != null)
+            if (Bids.Any(x => x.User.Id == bid.User.Id && x.CreatedDate.Date == biddingStartTime.Date))
+            {
+                errorMessage += "\nCurrent user already has made a bid.";
+            }
+
+            if (!string.IsNullOrEmpty(errorMessage))
             {
                 throw new BusinessLogicException(errorMessage);
             }

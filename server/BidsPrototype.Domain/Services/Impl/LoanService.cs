@@ -48,6 +48,7 @@ namespace BidsPrototype.Domain.Services.Impl
         public async Task MakeBid(int userId, int loanId, double amount)
         {
             var spec = new Specification<Loan>(x => x.Id == loanId);
+            spec.Includes.Add(x => x.Bids);
             spec.IncludeStrings.Add("LoanUsers.User");
 
             Loan loan = await _loanRepo.FindFirstAsync(spec);
