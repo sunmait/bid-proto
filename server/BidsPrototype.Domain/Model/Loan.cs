@@ -43,7 +43,7 @@ namespace BidsPrototype.Domain.Model
             User user = LoanUsers
                 .FirstOrDefault(x => x.UserId == userId)
                 ?.User;
-            Bid bid = new Bid(amount, user);
+            Bid bid = new Bid(amount, user, DateTime.Now);
 
             ValidateNewBid(bid);
 
@@ -68,11 +68,10 @@ namespace BidsPrototype.Domain.Model
         {
             string errorMessage = null;
 
-            DateTime now = DateTime.Now;
+            DateTime biddingStartTime = GetNearestBidStatTime(bid.CreatedDate);
+            DateTime biddingEndTime = biddingStartTime.AddSeconds(BidTimeDurationSeconds);
 
-            DateTime bidStartTime = GetNearestBidStatTime(now);
-            DateTime bidEndTime = bidStartTime.AddSeconds(BidTimeDurationSeconds);
-            if (now < bidStartTime || now > bidEndTime)
+            if (bid.CreatedDate < biddingStartTime || bid.CreatedDate > biddingEndTime)
             {
                 errorMessage = "Invalid time for bidding.";
             }
