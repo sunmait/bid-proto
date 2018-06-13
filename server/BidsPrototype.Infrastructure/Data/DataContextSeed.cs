@@ -26,34 +26,5 @@ namespace BidsPrototype.Infrastructure.Data
                 new Loan("Loan 4", 400, 90)
             };
         }
-
-        private static IEnumerable<Account> GetPreconfiguredAccounts()
-        {
-            var acc1 = new Account("user1", "1234");
-            acc1.SetUser(new User());
-
-            var acc2 = new Account("user2", "1234");
-            acc1.SetUser(new User());
-
-            var acc3 = new Account("user2", "1234");
-            acc1.SetUser(new User());
-
-            return new List<Account>() { acc1, acc2, acc3 };
-        }
-
-        private static IEnumerable<LoanUser> GetPreconfiguredLoanUsers()
-        {
-            return new List<LoanUser>()
-            {
-                new LoanUser() { UserId = 1, LoanId = 1 },
-                new LoanUser() { UserId = 1, LoanId = 2 },
-                new LoanUser() { UserId = 1, LoanId = 3 },
-                new LoanUser() { UserId = 1, LoanId = 4 },
-                new LoanUser() { UserId = 2, LoanId = 2 },
-                new LoanUser() { UserId = 2, LoanId = 3 },
-                new LoanUser() { UserId = 2, LoanId = 4 },
-                new LoanUser() { UserId = 1, LoanId = 2 }
-            };
-        }
     }
 }
