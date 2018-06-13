@@ -11,7 +11,8 @@ namespace BidsPrototype.API.Infrastructure.DependencyInjection
         public static IServiceCollection AddRepositories(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString))
-                .AddTransient<ILoanRepository, LoanRepository>();
+                .AddTransient<ILoanRepository, LoanRepository>()
+                .AddTransient<IAccountRepository, AccountRepository>();
 
             return services;
         }

@@ -1,4 +1,6 @@
-﻿namespace BidsPrototype.API.Models.Loans
+﻿using System;
+
+namespace BidsPrototype.API.Models.Loans
 {
     public class LoanViewModel
     {
@@ -7,5 +9,9 @@
         public string Label { get; set; }
 
         public double MaxBidAmount { get; set; }
+
+        public DateTime BidStartTime { get; set; }
+
+        public int BidTimeDurationSeconds { get; set; }
     }
 }

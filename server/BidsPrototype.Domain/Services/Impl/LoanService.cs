@@ -27,7 +27,6 @@ namespace BidsPrototype.Domain.Services.Impl
 
         public async Task MakeBid(int userId, int loanId, double amount)
         {
-            // TODO: add validation
             var spec = new Specification<Loan>(x => x.Id == loanId);
             spec.IncludeStrings.Add("LoanUsers.User");
 

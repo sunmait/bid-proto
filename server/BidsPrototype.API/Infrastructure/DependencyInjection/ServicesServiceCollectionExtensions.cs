@@ -8,7 +8,9 @@ namespace BidsPrototype.API.Infrastructure.DependencyInjection
     {
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            services.AddTransient<ILoanService, LoanService>();
+            services
+                .AddTransient<ILoanService, LoanService>()
+                .AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }
