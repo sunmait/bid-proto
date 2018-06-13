@@ -1,0 +1,17 @@
+.winners-page {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.winners-page__header {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+.winners-page__winner {
+
+}

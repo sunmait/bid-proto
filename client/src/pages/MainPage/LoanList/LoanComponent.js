@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Countdown from 'react-countdown-now';
+import { withRouter } from 'react-router-dom';
 import { Segment, Button } from 'semantic-ui-react';
 import { format, distanceInWordsToNow, isPast, isFuture, addSeconds } from 'date-fns';
 import { getBEMClasses } from '../../../helpers/cssHelper';
@@ -44,6 +46,8 @@ class Loan extends React.Component {
   render() {
     const { loan } = this.props;
     const { open } = this.state;
+    const { history } = this.context.router;
+
     return (
       <Segment className={bemClasses()} >
         <div className={bemClasses('info')}>
@@ -54,6 +58,7 @@ class Loan extends React.Component {
             <div>
               Bid time: {format(loan.bidStartTime, 'DD-MM-YYYY HH:mm')}
             </div>
+            <Button onClick={() => { history.push(`/winners/${loan.id}`) }}>Show winners</Button>
           </div>
           <div>
             {this.renderBidButton()}
@@ -67,6 +72,11 @@ class Loan extends React.Component {
   }
 }
 
+Loan.contextTypes = {
+  router: PropTypes.shape({
+    history: PropTypes.object.isRequired
+  }).isRequired
+};
 
 
-export default Loan;
+export default withRouter(Loan);

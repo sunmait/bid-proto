@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import LoginPage from './pages/LoginPage/LoginPageContainer';
 import MainPage from './pages/MainPage/MainPageContainer';
+import WinnersPage from './pages/WinnersPage/WinnersPageContainer';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -18,6 +19,7 @@ class App extends Component {
       <div className="App">
         <Route path="/" component={MainPage} exact />
         <Route path="/login" component={LoginPage} />
+        <Route path="/winners/:id" component={WinnersPage} />
       </div>
     );
   }

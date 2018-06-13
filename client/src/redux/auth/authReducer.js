@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, AUTH_REDIRECT, LOGOUT_SUCCESS } from "./authActions";
+import { LOGIN_SUCCESS, AUTH_REDIRECT, LOGOUT_SUCCESS, SET_AUTH_TOKEN } from "./authActions";
 
 const initialState = {
   isAuthenticated: false,
@@ -31,6 +31,11 @@ export default function authReducer(state = initialState, { type, payload }) {
         isAuthenticated: false,
         username: null,
         pending: false,
+      }
+    case SET_AUTH_TOKEN:
+      return {
+        ...state,
+        userId: payload
       }
     default:
       return state;

@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.header__username {
+  padding-right: 1rem;
+}
