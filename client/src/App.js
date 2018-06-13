@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage/LoginPageContainer';
 import MainPage from './pages/MainPage/MainPageContainer';
@@ -11,10 +11,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <Link to="/">INDEX</Link>
-          <Link to="/login">LOGIN</Link>
-        </header>
         <Route path="/" component={MainPage} exact />
         <Route path="/login" component={LoginPage} />
       </div>
@@ -22,4 +18,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+export default App;

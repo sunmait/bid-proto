@@ -1,7 +1,7 @@
 import React from 'react';
-import Countdown, { getTimeDifference } from 'react-countdown-now';
+import Countdown from 'react-countdown-now';
 import { Segment, Button } from 'semantic-ui-react';
-import { format, differenceInHours } from 'date-fns';
+import { format, distanceInWordsToNow, isPast, isFuture, addSeconds } from 'date-fns';
 import { getBEMClasses } from '../../../helpers/cssHelper';
 import './LoanComponent.css';
 import BidModalContainer from './BidModalContainer';
@@ -11,21 +11,19 @@ const bemClasses = getBEMClasses('loan');
 class Loan extends React.Component {
   constructor(props) {
     super(props);
-    const diffFromNow = differenceInHours(props.loan.bidStartTime, new Date());
-    const canBid =  getTimeDifference(props.loan.bidStartTime).completed && diffFromNow >= 0 && diffFromNow < 1;
+    const canBid = isPast(props.loan.bidStartTime) && isFuture(addSeconds(props.loan.bidStartTime, props.loan.bidTimeDurationSeconds));
     this.state = { open: false, canBid }
   }
-
 
   show = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
 
   renderConuntdownContent(props) {
-    const { hours, minutes, seconds } = props;
-
+    const { date } = props;
+    const text = distanceInWordsToNow(date, { includeSeconds: true });
     return (
       <div>
-        You can bid in {hours}:{minutes}:{seconds}
+        You can bid in {text}
       </div>
     )
   }
@@ -34,7 +32,7 @@ class Loan extends React.Component {
     const { loan } = this.props;
     if (this.state.canBid) {
       return (
-        <Button color="red" onClick={this.show} >Bid now</Button>
+        <Button color="red" onClick={this.show}>Bid now</Button>
       )
     } else {
       return (
@@ -51,7 +49,7 @@ class Loan extends React.Component {
         <div className={bemClasses('info')}>
           <div>
             <div>
-              {loan.name}
+              {loan.label}
             </div>
             <div>
               Bid time: {format(loan.bidStartTime, 'DD-MM-YYYY HH:mm')}

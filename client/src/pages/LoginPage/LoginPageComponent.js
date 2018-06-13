@@ -17,12 +17,15 @@ const LoginPage = props => {
           LOG IN
         </header>
         <Form onSubmit={props.handleSubmit}>
-          <Message
-            error
-            visible={props.submitFailed}
-            content={props.error}
-          />
-          <InputField name="userName" label="User Name" validate={[required]} required />
+          {props.error && (
+            <Message
+              error
+              visible={props.submitFailed}
+              content={props.error}
+            />
+          )}
+
+          <InputField name="username" label="User Name" validate={[required]} required />
           <InputField name="password" type="password" label="Password" validate={[required]} required />
           <Button fluid type='submit' color="blue">LOGIN</Button>
         </Form>

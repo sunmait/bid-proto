@@ -4,7 +4,7 @@ import { bid } from '../../../redux/loan/loanActions';
 
 const form = reduxForm({
   form: 'loanBid',
-  onSubmit: (payload, dispatch, props) => { return dispatch(bid(payload, props.loan)).then(props.close) }
+  onSubmit: (payload, dispatch, props) => dispatch(bid(payload, props.loan)).then(props.close)
 })(BidModal);
 
 export default form;

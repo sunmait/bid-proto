@@ -47,7 +47,7 @@ namespace BidsPrototype.API.Controllers
         [HttpPost("{id}/bid")]
         public async Task<ActionResult> MakeBid(int id, MakeBidInputModel inputModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }

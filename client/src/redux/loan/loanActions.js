@@ -1,23 +1,13 @@
 import { SubmissionError } from 'redux-form';
-import { addSeconds, subHours } from 'date-fns';
+import axios from 'axios';
+
 export const REQUEST_LOANS = 'REQUEST_LOANS';
 export const RECEIVE_LOANS = 'RECEIVE_LOANS';
 
-
-const loans = [
-  { name: 'loan 1', bidStartTime: subHours(new Date(), 2), },
-  { name: 'loan 2', bidStartTime: addSeconds(new Date(), 10), },
-  { name: 'loan 3', bidStartTime: addSeconds(new Date(), 2), }
-]
-
-export const fetchLoans = () => async dispatch => {
+export const fetchLoans = () => async (dispatch) => {
   dispatch(requestLoans());
-  return new Promise(resolve => {
-    setTimeout(() => {
-      dispatch(receiveLoans(loans));
-      resolve();
-    }, 500);
-  });
+  const response = await axios.get('loans');
+  dispatch(receiveLoans(response.data));
 }
 
 export const requestLoans = () => ({
@@ -30,7 +20,8 @@ export const receiveLoans = payload => ({
 });
 
 export const bid = (payload, loan) => async dispatch => {
-  console.log(payload, loan);
-  throw new SubmissionError({ _error: 'general'})
+  return axios.post(`loans/${loan.id}/bid`, payload).catch(error => {
+    throw new SubmissionError({ _error: error.response.data })
+  });
 
 }

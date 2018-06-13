@@ -3,7 +3,8 @@ import { LOGIN_SUCCESS, AUTH_REDIRECT, LOGOUT_SUCCESS } from "./authActions";
 const initialState = {
   isAuthenticated: false,
   pending: true,
-  userName: null,
+  username: null,
+  userId: null,
   shouldRedirect: false,
   location: null
 };
@@ -14,7 +15,8 @@ export default function authReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         isAuthenticated: true,
-        userName: payload.userName
+        username: payload.username,
+        userId: payload.userId
       }
     case AUTH_REDIRECT:
       return {
@@ -26,7 +28,7 @@ export default function authReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         isAuthenticated: false,
-        userName: null
+        username: null
       }
     default:
       return state;
