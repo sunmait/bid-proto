@@ -16,7 +16,8 @@ export default function authReducer(state = initialState, { type, payload }) {
         ...state,
         isAuthenticated: true,
         username: payload.username,
-        userId: payload.userId
+        userId: payload.userId,
+        pending: false
       }
     case AUTH_REDIRECT:
       return {
@@ -28,7 +29,8 @@ export default function authReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         isAuthenticated: false,
-        username: null
+        username: null,
+        pending: false,
       }
     default:
       return state;

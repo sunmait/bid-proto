@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import LoginPage from './pages/LoginPage/LoginPageContainer';
 import MainPage from './pages/MainPage/MainPageContainer';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
+import { checkAuthToken } from './redux/auth/authActions';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.checkAuthToken();
+  }
   render() {
     return (
       <div className="App">
@@ -18,4 +23,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = {
+  checkAuthToken: checkAuthToken
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

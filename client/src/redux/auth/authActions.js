@@ -8,7 +8,9 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 export const login = creds => async dispatch => {
   return axios.post('login', creds).then(response => {
-    dispatch(loginSuccess(response.data));
+    localStorage.setItem('token', response.data.userId)
+    localStorage.setItem('username', response.data.username);
+    dispatch(loginSuccess(response.data.userId, response.data.username));
   }).catch(error => {
     throw new SubmissionError({ _error: error.response.data })
   });
@@ -20,9 +22,24 @@ export const logout = () => async dispatch => {
   dispatch(logoutSuccess())
 }
 
-const loginSuccess = payload => ({
+export const checkAuthToken = () => dispatch => {
+  const token = localStorage.getItem('token');
+
+  if(token) {
+    const username = localStorage.getItem('username');
+    
+    dispatch(loginSuccess(token, username))
+  } else {
+    dispatch(logoutSuccess())
+  }
+}
+
+export const loginSuccess = (userId, username) => ({
   type: LOGIN_SUCCESS,
-  payload
+  payload: {
+    userId,
+    username
+  }
 });
 
 export const redirectFromLogin = location => ({

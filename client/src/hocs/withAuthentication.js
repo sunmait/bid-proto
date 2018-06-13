@@ -5,7 +5,12 @@ import { redirectFromLogin } from '../redux/auth/authActions';
 
 function withAuthentication(WrappedComponent) {
   const ModifiedComponent = props => {
-    const { isAuthenticated, location, redirectFromLogin } = props;
+    const { isAuthenticated, location, redirectFromLogin, pendingAuth } = props;
+
+    if (pendingAuth) {
+      return null;
+    }
+
     if (!isAuthenticated) {
       redirectFromLogin(location);
       return <Redirect to="/login" />;

@@ -11,6 +11,7 @@ import history from './helpers/history';
 
 import './index.css';
 
+initializeAxios();
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
@@ -20,4 +21,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 registerServiceWorker();
-initializeAxios();

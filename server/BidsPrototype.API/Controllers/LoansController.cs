@@ -72,12 +72,6 @@ namespace BidsPrototype.API.Controllers
         [HttpGet("{id}/winners")]
         public async Task<ActionResult<IEnumerable<BiddingWinnerViewModel>>> GetWinners(int id)
         {
-            int? currentUserId = ExtractUserIdFromHeader();
-            if (currentUserId == null)
-            {
-                return Unauthorized();
-            }
-
             IEnumerable<(DateTime biddingDate, Bid winningBid)> winners = await _loanService.GetBiddingWinners(id);
             IEnumerable<BiddingWinnerViewModel> viewModels = winners.Select(x => new BiddingWinnerViewModel()
             {
