@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BidsPrototype.API.Models.Loans;
@@ -28,12 +29,16 @@ namespace BidsPrototype.API.Controllers
                 return Unauthorized();
             }
 
+            DateTime now = DateTime.Now;
+
             IEnumerable<Loan> loans = await _loanService.GetLoansOfUserAsync(currentUserId.Value);
             IEnumerable<LoanViewModel> viewModels = loans.Select(loan => new LoanViewModel()
             {
                 Id = loan.Id,
                 Label = loan.Label,
-                MaxBidAmount = loan.MaxBidAmount
+                MaxBidAmount = loan.MaxBidAmount,
+                BidStartTime = loan.GetNearestBidStatTime(now),
+                BidTimeDurationSeconds = loan.BidTimeDurationSeconds
             });
 
             return Ok(viewModels);

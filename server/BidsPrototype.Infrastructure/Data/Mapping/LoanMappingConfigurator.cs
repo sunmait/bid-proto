@@ -14,6 +14,14 @@ namespace BidsPrototype.Infrastructure.Data.Mapping
             builder.Property(x => x.InitialFee).IsRequired();
             builder.Property(x => x.AvailableBidPercentage).IsRequired();
 
+            builder.Property<int>("_bidStartDay")
+                .HasColumnName("BidStatrDay")
+                .IsRequired();
+
+            builder.Property<int>("_bidStartTimeSeconds")
+                .HasColumnName("BidStartTimeSeconds")
+                .IsRequired();
+
             builder.HasMany(x => x.Bids)
                 .WithOne(x => x.Loan)
                 .IsRequired();
