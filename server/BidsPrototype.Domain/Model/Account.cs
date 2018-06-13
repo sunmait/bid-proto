@@ -16,9 +16,9 @@
 
         public User User { get; private set; }
 
-        public void SetUser(User user)
+        public bool ValidateCredentials(string username, string password)
         {
-            User = user;
+            return Username == username && RawPassword == password;
         }
     }
 }

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BidsPrototype.API.Models.Loans;
+using BidsPrototype.Domain.Exceptions;
 using BidsPrototype.Domain.Model;
 using BidsPrototype.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BidsPrototype.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class LoansController : ControllerBase
     {
@@ -21,14 +22,18 @@ namespace BidsPrototype.API.Controllers
 
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            int currentUserId = 1;
+            int? currentUserId = ExtractUserIdFromHeader();
+            if (currentUserId == null)
+            {
+                return Unauthorized();
+            }
 
-            IEnumerable<Loan> loans = await _loanService.GetLoansOfUserAsync(currentUserId);
+            IEnumerable<Loan> loans = await _loanService.GetLoansOfUserAsync(currentUserId.Value);
             IEnumerable<LoanViewModel> viewModels = loans.Select(loan => new LoanViewModel()
             {
                 Id = loan.Id,
                 Label = loan.Label,
-                MaxBidAmount = (loan.LoanUsers.Count() * loan.InitialFee) * (loan.AvailableBidPercentage / 100.0)
+                MaxBidAmount = loan.MaxBidAmount
             });
 
             return Ok(viewModels);
@@ -37,10 +42,34 @@ namespace BidsPrototype.API.Controllers
         [HttpPost("{id}/bid")]
         public async Task<ActionResult> MakeBid(int id, MakeBidInputModel inputModel)
         {
-            int currentUserId = 1;
-            await _loanService.MakeBid(currentUserId, id, inputModel.Amount);
+            if (ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok();
+            int? currentUserId = ExtractUserIdFromHeader();
+            if (currentUserId == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await _loanService.MakeBid(currentUserId.Value, id, inputModel.Amount);
+                return Ok();
+            }
+            catch (BusinessLogicException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        private int? ExtractUserIdFromHeader()
+        {
+            int userId;
+            bool isSuccessful = int.TryParse(Request.Headers["userid"], out userId);
+
+            return isSuccessful ? userId : (int?)null;
         }
     }
 }

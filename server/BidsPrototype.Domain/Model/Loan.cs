@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BidsPrototype.Domain.Exceptions;
 
 namespace BidsPrototype.Domain.Model
 {
@@ -24,12 +25,31 @@ namespace BidsPrototype.Domain.Model
 
         public ICollection<LoanUser> LoanUsers { get; private set; } = new List<LoanUser>();
 
+        public double MaxBidAmount => (LoanUsers.Count * InitialFee) * (AvailableBidPercentage / 100.0);
+
         public void MakeBid(int userId, double amount)
         {
-            User user = LoanUsers.First(x => x.UserId == userId).User;
+            User user = LoanUsers
+                .FirstOrDefault(x => x.UserId == userId)
+                ?.User;
             Bid bid = new Bid(amount, user);
 
+            ValidateNewBid(bid);
+
             Bids.Add(bid);
+        }
+
+        private void ValidateNewBid(Bid bid)
+        {
+            if (bid.Amount < 1 || bid.Amount > MaxBidAmount)
+            {
+                throw new BusinessLogicException("Invalid bid amount.");
+            }
+
+            if (bid.User == null)
+            {
+                throw new BusinessLogicException("Current user doesn't participate in specified loan.");
+            }
         }
     }
 }
