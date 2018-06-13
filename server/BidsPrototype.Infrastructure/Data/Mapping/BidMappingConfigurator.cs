@@ -10,6 +10,7 @@ namespace BidsPrototype.Infrastructure.Data.Mapping
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Amount).IsRequired();
+            builder.Property(x => x.CreatedDate).IsRequired();
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.Bids)
